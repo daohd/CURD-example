@@ -10,7 +10,7 @@ using WebAPI.Repository;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    [Migration("20230525162641_Initial")]
+    [Migration("20230525171948_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,10 +32,12 @@ namespace WebAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(240)
+                        .HasColumnType("nvarchar(240)");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("CustomerId");
 
@@ -52,12 +54,17 @@ namespace WebAPI.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("OrderID");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Order");
                 });
@@ -69,21 +76,17 @@ namespace WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OrderID")
-                        .HasColumnType("int");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("ShopId")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
-
-                    b.HasIndex("OrderID");
 
                     b.HasIndex("ShopId");
 
@@ -98,10 +101,12 @@ namespace WebAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("ShopName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("ShopId");
 
@@ -111,18 +116,24 @@ namespace WebAPI.Migrations
             modelBuilder.Entity("WebAPI.Models.Order", b =>
                 {
                     b.HasOne("WebAPI.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .WithMany("Purchases")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebAPI.Models.Product", "Product")
+                        .WithMany("Purchases")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("WebAPI.Models.Product", b =>
                 {
-                    b.HasOne("WebAPI.Models.Order", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderID");
-
                     b.HasOne("WebAPI.Models.Shop", "Shop")
                         .WithMany("Products")
                         .HasForeignKey("ShopId")
@@ -132,9 +143,14 @@ namespace WebAPI.Migrations
                     b.Navigation("Shop");
                 });
 
-            modelBuilder.Entity("WebAPI.Models.Order", b =>
+            modelBuilder.Entity("WebAPI.Models.Customer", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Purchases");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.Product", b =>
+                {
+                    b.Navigation("Purchases");
                 });
 
             modelBuilder.Entity("WebAPI.Models.Shop", b =>

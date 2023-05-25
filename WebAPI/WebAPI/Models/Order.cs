@@ -11,9 +11,13 @@ namespace WebAPI.Models
     {
         [Key]
         public int OrderID { get; set; }
-        public Customer Customer { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        public int CustomerId { get; set; }
+
+        public int ProductId { get; set; }
+        public virtual Customer Customer { get; set; } = null!;
+
+        public virtual Product Product { get; set; } = null!;
         public DateTime CreateDate { get; set; }
 
     }

@@ -12,9 +12,11 @@ namespace WebAPI.Models
     {
         [Key]
         public int ShopId { get; set; }
+        [StringLength(250)]
         public string ShopName { get; set; }
+        [StringLength(250)]
         public string Location { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
     }
 }

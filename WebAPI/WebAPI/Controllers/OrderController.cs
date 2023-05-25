@@ -25,6 +25,19 @@ namespace WebAPI.Controllers
             return Ok(await _order.GetOrders());
         }
 
-        
+        [HttpPost]
+        [Route("createOrder")]
+        public async Task<IActionResult> InsertProduct(Order order)
+        {
+
+            var result = await _order.CreateOrder(order);
+            if (result == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
+            }
+
+            return Ok("Added Successfully");
+        }
+
     }
 }

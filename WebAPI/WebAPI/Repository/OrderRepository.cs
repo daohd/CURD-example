@@ -10,6 +10,7 @@ namespace WebAPI.Repository
     public interface IOrderRepository
     {
         Task<IEnumerable<Order>> GetOrders();
+        Task<Order> CreateOrder(Order objorder);
         
     }
 
@@ -28,6 +29,14 @@ namespace WebAPI.Repository
             var lst =  await _appDBContext.Orders.ToListAsync();
 
             return lst;
+        }
+
+        public async Task<Order> CreateOrder(Order objorder)
+        {
+            _appDBContext.Orders.Add(objorder);
+            await _appDBContext.SaveChangesAsync();
+            return objorder;
+
         }
 
         public async Task<Order> GetOrderByID(int ID)
