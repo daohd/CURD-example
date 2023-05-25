@@ -1,15 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAPI.Models
 {
-    [Table("Department")]
+    [Table("Customer")]
 
-    public class Department
+    public class Customer
     {
         [Key]
-        public int DepartmentId { get; set; }
+        public int CustomerId { get; set; }
+        public string FullName { get; set; }
 
-        public string DepartmentName { get; set; }
+        public DateTime DOB { get; set; }
+        public string Email { get; set; }
     }
 }

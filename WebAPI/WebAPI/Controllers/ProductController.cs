@@ -11,35 +11,35 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly IWebHostEnvironment _env;
-        private readonly IEmployeeRepository _employee;
-        private readonly IDepartmentRepository _department;
+        private readonly IProductRepository _Product;
+        private readonly ICustomerRepository _customer;
 
-        public EmployeeController(IWebHostEnvironment env,
-            IEmployeeRepository employee,
-            IDepartmentRepository department)
+        public ProductController(IWebHostEnvironment env,
+            IProductRepository Product,
+            ICustomerRepository customer)
         {
             _env = env;
-            _employee = employee ?? throw new ArgumentNullException(nameof(employee));
-            _department = department ?? throw new ArgumentNullException(nameof(department));
+            _Product = Product ?? throw new ArgumentNullException(nameof(Product));
+            _customer = customer ?? throw new ArgumentNullException(nameof(customer));
         }
 
         [HttpGet]
-        [Route("GetEmployee")]
+        [Route("GetProduct")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _employee.GetEmployees());
+            return Ok(await _Product.GetProducts());
         }
 
 
         [HttpPost]
-        [Route("AddEmployee")]
-        public async Task<IActionResult> Post(Employee emp)
+        [Route("InsertProduct")]
+        public async Task<IActionResult> InsertProduct(Product product)
         {
 
-            var result = await _employee.InsertEmployee(emp);
+            var result = await _Product.InsertProduct(product);
             if (result == null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
@@ -50,10 +50,10 @@ namespace WebAPI.Controllers
 
 
         [HttpPut]
-        [Route("UpdateEmployee")]
-        public async Task<IActionResult> Put(Employee emp)
+        [Route("UpdateProduct")]
+        public async Task<IActionResult> UpdateProduct(Product product)
         {
-            var result = await _employee.UpdateEmployee(emp);
+            var result = await _Product.UpdateProduct(product);
             if (result == null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
@@ -65,7 +65,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            var result = _employee.DeleteEmployee(id);
+            var result = _Product.DeleteProduct(id);
             return new JsonResult("Deleted Successfully");
         }
 
@@ -95,11 +95,11 @@ namespace WebAPI.Controllers
         }
 
 
-        [Route("GetAllDepartmentNames")]
+        [Route("GetAllProducts")]
         [HttpGet]
-        public async Task<IActionResult> GetAllDepartmentNames()
+        public async Task<IActionResult> GetAllProducts()
         {
-            return Ok(await _department.GetDepartment());
+            return Ok(await _Product.GetProducts());
         }
     }
 }

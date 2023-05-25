@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Models
 {
-    [Table("Employee_Angular")]
-    public class EmployeeAngular
+    [Table("Shop")]
+    public class Shop
     {
         [Key]
-        public int EmployeeID { get; set; }
-        public string EmployeeName { get; set; }
-        public string Department { get; set; }
-        public string EmailId { get; set; }
-        public DateTime DOJ { get; set; }
+        public int ShopId { get; set; }
+        public string ShopName { get; set; }
+        public string Location { get; set; }
+       
     }
 }
