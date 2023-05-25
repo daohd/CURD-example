@@ -10,7 +10,7 @@ using WebAPI.Repository;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    [Migration("20230525132328_Initial")]
+    [Migration("20230525142126_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,27 @@ namespace WebAPI.Migrations
                     b.ToTable("Customer");
                 });
 
+            modelBuilder.Entity("WebAPI.Models.Order", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CustomerEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderID");
+
+                    b.ToTable("Order");
+                });
+
             modelBuilder.Entity("WebAPI.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -49,13 +70,21 @@ namespace WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("OrderID")
+                        .HasColumnType("int");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ShopId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProductId");
+
+                    b.HasIndex("OrderID");
 
                     b.ToTable("Product");
                 });
@@ -76,6 +105,18 @@ namespace WebAPI.Migrations
                     b.HasKey("ShopId");
 
                     b.ToTable("Shop");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.Product", b =>
+                {
+                    b.HasOne("WebAPI.Models.Order", null)
+                        .WithMany("Prducts")
+                        .HasForeignKey("OrderID");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.Order", b =>
+                {
+                    b.Navigation("Prducts");
                 });
 #pragma warning restore 612, 618
         }

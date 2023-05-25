@@ -13,6 +13,7 @@ namespace WebAPI.Repository
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Shop> Shops { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
     }
 }
