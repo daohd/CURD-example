@@ -10,7 +10,7 @@ namespace WebAPI.Repository
 
         }
 
-        public DbSet<Department> Departments { get; set; }
+        public DbSet<Customer> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeAngular> EmployeeAngulars { get; set; }
 

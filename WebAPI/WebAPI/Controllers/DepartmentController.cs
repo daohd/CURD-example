@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("AddDepartment")]
-        public async Task<IActionResult> Post(Department dep)
+        public async Task<IActionResult> Post(Customer dep)
         {
             var result = await _department.InsertDepartment(dep);
             if (result.DepartmentId == 0)
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("UpdateDepartment")]
-        public async Task<IActionResult> Put(Department dep)
+        public async Task<IActionResult> Put(Customer dep)
         {
             await _department.UpdateDepartment(dep);
             return Ok("Updated Successfully");

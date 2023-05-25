@@ -8,10 +8,10 @@ namespace WebAPI.Repository
 {
     public interface IEmployeeRepository
     {
-        Task<IEnumerable<Employee>> GetEmployees();
-        Task<Employee> GetEmployeeByID(int ID);
-        Task<Employee> InsertEmployee(Employee objEmployee);
-        Task<Employee> UpdateEmployee(Employee objEmployee);
+        Task<IEnumerable<Product>> GetEmployees();
+        Task<Product> GetEmployeeByID(int ID);
+        Task<Product> InsertEmployee(Product objEmployee);
+        Task<Product> UpdateEmployee(Product objEmployee);
         bool DeleteEmployee(int ID);
     }
     public class EmployeeRepository : IEmployeeRepository
@@ -24,24 +24,24 @@ namespace WebAPI.Repository
             _appDBContext = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployees()
+        public async Task<IEnumerable<Product>> GetEmployees()
         {
             return await _appDBContext.Employees.ToListAsync();
         }
 
-        public async Task<Employee> GetEmployeeByID(int ID)
+        public async Task<Product> GetEmployeeByID(int ID)
         {
             return await _appDBContext.Employees.FindAsync(ID);
         }
 
-        public async Task<Employee> InsertEmployee(Employee objEmployee)
+        public async Task<Product> InsertEmployee(Product objEmployee)
         {
             _appDBContext.Employees.Add(objEmployee);
             await _appDBContext.SaveChangesAsync();
             return objEmployee;
         }
 
-        public async Task<Employee> UpdateEmployee(Employee objEmployee)
+        public async Task<Product> UpdateEmployee(Product objEmployee)
         {
             _appDBContext.Entry(objEmployee).State = EntityState.Modified;
             await _appDBContext.SaveChangesAsync();
