@@ -1,42 +1,42 @@
 import React, { Component } from 'react';
 import { variables } from './Variables.js';
 
-export class Department extends Component {
+export class Customer extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            departments: [],
+            Customers: [],
             modalTitle: "",
-            DepartmentName: "",
-            DepartmentId: 0,
+            CustomerName: "",
+            CustomerId: 0,
 
-            DepartmentIdFilter: "",
-            DepartmentNameFilter: "",
-            departmentsWithoutFilter: []
+            CustomerIdFilter: "",
+            CustomerNameFilter: "",
+            CustomersWithoutFilter: []
         }
     }
 
     FilterFn() {
-        var DepartmentIdFilter = this.state.DepartmentIdFilter;
-        var DepartmentNameFilter = this.state.DepartmentNameFilter;
+        var CustomerIdFilter = this.state.CustomerIdFilter;
+        var CustomerNameFilter = this.state.CustomerNameFilter;
 
-        var filteredData = this.state.departmentsWithoutFilter.filter(
+        var filteredData = this.state.CustomersWithoutFilter.filter(
             function (el) {
-                return el.DepartmentId.toString().toLowerCase().includes(
-                    DepartmentIdFilter.toString().trim().toLowerCase()
+                return el.CustomerId.toString().toLowerCase().includes(
+                    CustomerIdFilter.toString().trim().toLowerCase()
                 ) &&
-                    el.DepartmentName.toString().toLowerCase().includes(
-                        DepartmentNameFilter.toString().trim().toLowerCase()
+                    el.CustomerName.toString().toLowerCase().includes(
+                        CustomerNameFilter.toString().trim().toLowerCase()
                     )
             }
         );
-        this.setState({ departments: filteredData });
+        this.setState({ Customers: filteredData });
     }
 
     sortResult(prop, asc) {
-        var sortedData = this.state.departmentsWithoutFilter.sort(function (a, b) {
+        var sortedData = this.state.CustomersWithoutFilter.sort(function (a, b) {
             if (asc) {
                 return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
             }
@@ -44,23 +44,23 @@ export class Department extends Component {
                 return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
             }
         });
-        this.setState({ departments: sortedData });
+        this.setState({ Customers: sortedData });
     }
 
-    changeDepartmentIdFilter = (e) => {
-        this.state.DepartmentIdFilter = e.target.value;
+    changeCustomerIdFilter = (e) => {
+        this.state.CustomerIdFilter = e.target.value;
         this.FilterFn();
     }
-    changeDepartmentNameFilter = (e) => {
-        this.state.DepartmentNameFilter = e.target.value;
+    changeCustomerNameFilter = (e) => {
+        this.state.CustomerNameFilter = e.target.value;
         this.FilterFn();
     }
 
     refreshList() {
-        fetch(variables.API_URL + 'department/getDepartment')
+        fetch(variables.API_URL + 'Customer/getCustomer')
             .then(response => response.json())
             .then(data => {
-                this.setState({ departments: data, departmentsWithoutFilter: data });
+                this.setState({ Customers: data, CustomersWithoutFilter: data });
             });
     }
 
@@ -68,34 +68,34 @@ export class Department extends Component {
         this.refreshList();
     }
 
-    changeDepartmentName = (e) => {
-        this.setState({ DepartmentName: e.target.value });
+    changeCustomerName = (e) => {
+        this.setState({ CustomerName: e.target.value });
     }
 
     addClick() {
         this.setState({
-            modalTitle: "Add Department",
-            DepartmentId: 0,
-            DepartmentName: ""
+            modalTitle: "Add Customer",
+            CustomerId: 0,
+            CustomerName: ""
         });
     }
     editClick(dep) {
         this.setState({
-            modalTitle: "Edit Department",
-            DepartmentId: dep.DepartmentId,
-            DepartmentName: dep.DepartmentName
+            modalTitle: "Edit Customer",
+            CustomerId: dep.CustomerId,
+            CustomerName: dep.CustomerName
         });
     }
 
     createClick() {
-        fetch(variables.API_URL + 'department/adddepartment', {
+        fetch(variables.API_URL + 'Customer/addCustomer', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                DepartmentName: this.state.DepartmentName
+                CustomerName: this.state.CustomerName
             })
         })
             .then(res => res.json())
@@ -108,15 +108,15 @@ export class Department extends Component {
     }
 
     updateClick() {
-        fetch(variables.API_URL + 'department/updatedepartment', {
+        fetch(variables.API_URL + 'Customer/updateCustomer', {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                DepartmentId: this.state.DepartmentId,
-                DepartmentName: this.state.DepartmentName
+                CustomerId: this.state.CustomerId,
+                CustomerName: this.state.CustomerName
             })
         })
             .then(res => res.json())
@@ -130,7 +130,7 @@ export class Department extends Component {
 
     deleteClick(id) {
         if (window.confirm('Are you sure?')) {
-            fetch(variables.API_URL + 'department/deletedepartment/' + id, {
+            fetch(variables.API_URL + 'Customer/deleteCustomer/' + id, {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
@@ -149,10 +149,10 @@ export class Department extends Component {
 
     render() {
         const {
-            departments,
+            Customers,
             modalTitle,
-            DepartmentId,
-            DepartmentName
+            CustomerId,
+            CustomerName
         } = this.state;
 
         return (
@@ -163,7 +163,7 @@ export class Department extends Component {
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     onClick={() => this.addClick()}>
-                    Add Department
+                    Add Customer
                 </button>
                 <table className="table table-striped">
                     <thead>
@@ -172,47 +172,47 @@ export class Department extends Component {
                                 <div className="d-flex flex-row">
 
                                     <input className="form-control m-2"
-                                        onChange={this.changeDepartmentIdFilter}
+                                        onChange={this.changeCustomerIdFilter}
                                         placeholder="Filter" />
 
                                     <button type="button" className="btn btn-light"
-                                        onClick={() => this.sortResult('DepartmentId', true)}>
+                                        onClick={() => this.sortResult('CustomerId', true)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
                                             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z" />
                                         </svg>
                                     </button>
 
                                     <button type="button" className="btn btn-light"
-                                        onClick={() => this.sortResult('DepartmentId', false)}>
+                                        onClick={() => this.sortResult('CustomerId', false)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
                                             <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z" />
                                         </svg>
                                     </button>
 
                                 </div>
-                                Department Id
+                                Customer Id
                             </th>
                             <th>
                                 <div className="d-flex flex-row">
                                     <input className="form-control m-2"
-                                        onChange={this.changeDepartmentNameFilter}
+                                        onChange={this.changeCustomerNameFilter}
                                         placeholder="Filter" />
 
                                     <button type="button" className="btn btn-light"
-                                        onClick={() => this.sortResult('DepartmentName', true)}>
+                                        onClick={() => this.sortResult('CustomerName', true)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
                                             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z" />
                                         </svg>
                                     </button>
 
                                     <button type="button" className="btn btn-light"
-                                        onClick={() => this.sortResult('DepartmentName', false)}>
+                                        onClick={() => this.sortResult('CustomerName', false)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
                                             <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z" />
                                         </svg>
                                     </button>
                                 </div>
-                                Department Name
+                                Customer Name
 
                             </th>
                             <th>
@@ -221,10 +221,10 @@ export class Department extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {departments.map(dep =>
-                            <tr key={dep.DepartmentId}>
-                                <td>{dep.DepartmentId}</td>
-                                <td>{dep.DepartmentName}</td>
+                        {Customers.map(dep =>
+                            <tr key={dep.CustomerId}>
+                                <td>{dep.CustomerId}</td>
+                                <td>{dep.CustomerName}</td>
                                 <td>
                                     <button type="button"
                                         className="btn btn-light mr-1"
@@ -239,7 +239,7 @@ export class Department extends Component {
 
                                     <button type="button"
                                         className="btn btn-light mr-1"
-                                        onClick={() => this.deleteClick(dep.DepartmentId)}>
+                                        onClick={() => this.deleteClick(dep.CustomerId)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
                                             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                         </svg>
@@ -262,20 +262,20 @@ export class Department extends Component {
 
                             <div className="modal-body">
                                 <div className="input-group mb-3">
-                                    <span className="input-group-text">Department Name</span>
+                                    <span className="input-group-text">Customer Name</span>
                                     <input type="text" className="form-control"
-                                        value={DepartmentName}
-                                        onChange={this.changeDepartmentName} />
+                                        value={CustomerName}
+                                        onChange={this.changeCustomerName} />
                                 </div>
 
-                                {DepartmentId === 0 ?
+                                {CustomerId === 0 ?
                                     <button type="button"
                                         className="btn btn-primary float-start"
                                         onClick={() => this.createClick()}
                                     >Create</button>
                                     : null}
 
-                                {DepartmentId !== 0 ?
+                                {CustomerId !== 0 ?
                                     <button type="button"
                                         className="btn btn-primary float-start"
                                         onClick={() => this.updateClick()}

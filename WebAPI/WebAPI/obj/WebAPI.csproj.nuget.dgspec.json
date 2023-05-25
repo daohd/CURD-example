@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GIT\\CURD-example\\WebAPI\\WebAPI\\WebAPI.csproj": {}
+    "D:\\GIT\\CURD-example\\CURD-example\\WebAPI\\WebAPI\\WebAPI.csproj": {}
   },
   "projects": {
-    "D:\\GIT\\CURD-example\\WebAPI\\WebAPI\\WebAPI.csproj": {
+    "D:\\GIT\\CURD-example\\CURD-example\\WebAPI\\WebAPI\\WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GIT\\CURD-example\\WebAPI\\WebAPI\\WebAPI.csproj",
+        "projectUniqueName": "D:\\GIT\\CURD-example\\CURD-example\\WebAPI\\WebAPI\\WebAPI.csproj",
         "projectName": "WebAPI",
-        "projectPath": "D:\\GIT\\CURD-example\\WebAPI\\WebAPI\\WebAPI.csproj",
+        "projectPath": "D:\\GIT\\CURD-example\\CURD-example\\WebAPI\\WebAPI\\WebAPI.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\GIT\\CURD-example\\WebAPI\\WebAPI\\obj\\",
+        "outputPath": "D:\\GIT\\CURD-example\\CURD-example\\WebAPI\\WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -49,6 +49,12 @@
               "version": "[5.0.10, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[5.0.10, )"
             },

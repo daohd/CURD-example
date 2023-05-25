@@ -2,9 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 
 import { Home } from './Home';
-import { Department } from './Department';
-import { Employee } from './Employee';
-import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
+import { Customer } from './Customer';
+import { Product } from './Product';
+import { BrowserRouter, Route, NavLink, Routes } from 'react-router-dom';
 
 function App() {
   return (
@@ -22,23 +22,25 @@ function App() {
               </NavLink>
             </li>
             <li className="nav-item m-1">
-              <NavLink className="btn btn-light btn-outline-primary" to="/department">
-                Department
+              <NavLink className="btn btn-light btn-outline-primary" to="/Customer">
+                Customer
               </NavLink>
             </li>
             <li className="nav-item m-1">
-              <NavLink className="btn btn-light btn-outline-primary" to="/employee">
-                Employee
+              <NavLink className="btn btn-light btn-outline-primary" to="/Product">
+                Product
               </NavLink>
             </li>
           </ul>
         </nav>
 
-        <switch>
-          <Route path='/home' component={Home}></Route>
-          <Route path='/department' component={Department}></Route>
-          <Route path='/employee' component={Employee}></Route>
-        </switch>
+        
+          <Routes>
+          <Route path='/home' Component={Home}></Route>
+          <Route path='/Customer' Component={Customer}></Route>
+          <Route path='/Product' Component={Product}></Route>
+          </Routes>
+        
       </div>
     </BrowserRouter>
   );

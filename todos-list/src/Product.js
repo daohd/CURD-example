@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { variables } from './Variables.js';
 
-export class Employee extends Component {
+export class Product extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            departments: [],
-            employees: [],
+            Customers: [],
+            Products: [],
             modalTitle: "",
-            EmployeeId: 0,
-            EmployeeName: "",
-            Department: "",
+            ProductId: 0,
+            ProductName: "",
+            Customer: "",
             DateOfJoining: "",
             PhotoFileName: "anonymous.png",
             PhotoPath: variables.PHOTO_URL
@@ -21,16 +21,16 @@ export class Employee extends Component {
 
     refreshList() {
 
-        fetch(variables.API_URL + 'employee/GetEmployee')
+        fetch(variables.API_URL + 'Product/GetProduct')
             .then(response => response.json())
             .then(data => {
-                this.setState({ employees: data });
+                this.setState({ Products: data });
             });
 
-        fetch(variables.API_URL + 'department/getDepartment')
+        fetch(variables.API_URL + 'Customer/getCustomer')
             .then(response => response.json())
             .then(data => {
-                this.setState({ departments: data });
+                this.setState({ Customers: data });
             });
     }
 
@@ -38,11 +38,11 @@ export class Employee extends Component {
         this.refreshList();
     }
 
-    changeEmployeeName = (e) => {
-        this.setState({ EmployeeName: e.target.value });
+    changeProductName = (e) => {
+        this.setState({ ProductName: e.target.value });
     }
-    changeDepartment = (e) => {
-        this.setState({ Department: e.target.value });
+    changeCustomer = (e) => {
+        this.setState({ Customer: e.target.value });
     }
     changeDateOfJoining = (e) => {
         this.setState({ DateOfJoining: e.target.value });
@@ -50,10 +50,10 @@ export class Employee extends Component {
 
     addClick() {
         this.setState({
-            modalTitle: "Add Employee",
-            EmployeeId: 0,
-            EmployeeName: "",
-            Department: "",
+            modalTitle: "Add Product",
+            ProductId: 0,
+            ProductName: "",
+            Customer: "",
             DateOfJoining: "",
             PhotoFileName: "anonymous.png"
         });
@@ -61,25 +61,25 @@ export class Employee extends Component {
     editClick(emp) {
         debugger;
         this.setState({
-            modalTitle: "Edit Employee",
-            EmployeeId: emp.EmployeeId,
-            EmployeeName: emp.EmployeeName,
-            Department: emp.Department,
+            modalTitle: "Edit Product",
+            ProductId: emp.ProductId,
+            ProductName: emp.ProductName,
+            Customer: emp.Customer,
             DateOfJoining: emp.DateOfJoining,
             PhotoFileName: emp.PhotoFileName
         });
     }
 
     createClick() {
-        fetch(variables.API_URL + 'employee/addemployee', {
+        fetch(variables.API_URL + 'Product/addProduct', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                EmployeeName: this.state.EmployeeName,
-                Department: this.state.Department,
+                ProductName: this.state.ProductName,
+                Customer: this.state.Customer,
                 DateOfJoining: this.state.DateOfJoining,
                 PhotoFileName: this.state.PhotoFileName
             })
@@ -95,16 +95,16 @@ export class Employee extends Component {
 
 
     updateClick() {
-        fetch(variables.API_URL + 'employee/updateemployee', {
+        fetch(variables.API_URL + 'Product/updateProduct', {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                EmployeeId: this.state.EmployeeId,
-                EmployeeName: this.state.EmployeeName,
-                Department: this.state.Department,
+                ProductId: this.state.ProductId,
+                ProductName: this.state.ProductName,
+                Customer: this.state.Customer,
                 DateOfJoining: this.state.DateOfJoining,
                 PhotoFileName: this.state.PhotoFileName
             })
@@ -120,7 +120,7 @@ export class Employee extends Component {
 
     deleteClick(id) {
         if (window.confirm('Are you sure?')) {
-            fetch(variables.API_URL + 'employee/' + id, {
+            fetch(variables.API_URL + 'Product/' + id, {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
@@ -143,7 +143,7 @@ export class Employee extends Component {
         const formData = new FormData();
         formData.append("file", e.target.files[0], e.target.files[0].name);
 
-        fetch(variables.API_URL + 'employee/savefile', {
+        fetch(variables.API_URL + 'Product/savefile', {
             method: 'POST',
             body: formData
         })
@@ -155,12 +155,12 @@ export class Employee extends Component {
 
     render() {
         const {
-            departments,
-            employees,
+            Customers,
+            Products,
             modalTitle,
-            EmployeeId,
-            EmployeeName,
-            Department,
+            ProductId,
+            ProductName,
+            Customer,
             DateOfJoining,
             PhotoPath,
             PhotoFileName
@@ -174,19 +174,19 @@ export class Employee extends Component {
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     onClick={() => this.addClick()}>
-                    Add Employee
+                    Add Product
                 </button>
                 <table className="table table-striped">
                     <thead>
                         <tr>
                             <th>
-                                Employee Id
+                                Product Id
                             </th>
                             <th>
-                                Employee Name
+                                Product Name
                             </th>
                             <th>
-                                Department
+                                Customer
                             </th>
                             <th>
                                 DOJ
@@ -197,11 +197,11 @@ export class Employee extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {employees.map(emp =>
-                            <tr key={emp.EmployeeId}>
-                                <td>{emp.EmployeeId}</td>
-                                <td>{emp.EmployeeName}</td>
-                                <td>{emp.Department}</td>
+                        {Products.map(emp =>
+                            <tr key={emp.ProductId}>
+                                <td>{emp.ProductId}</td>
+                                <td>{emp.ProductName}</td>
+                                <td>{emp.Customer}</td>
                                 <td>{emp.DateOfJoining}</td>
                                 <td>
                                     <button type="button"
@@ -217,7 +217,7 @@ export class Employee extends Component {
 
                                     <button type="button"
                                         className="btn btn-light mr-1"
-                                        onClick={() => this.deleteClick(emp.EmployeeId)}>
+                                        onClick={() => this.deleteClick(emp.ProductId)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
                                             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                         </svg>
@@ -246,18 +246,18 @@ export class Employee extends Component {
                                         <div className="input-group mb-3">
                                             <span className="input-group-text">Emp Name</span>
                                             <input type="text" className="form-control"
-                                                value={EmployeeName}
-                                                onChange={this.changeEmployeeName} />
+                                                value={ProductName}
+                                                onChange={this.changeProductName} />
                                         </div>
 
                                         <div className="input-group mb-3">
-                                            <span className="input-group-text">Department</span>
+                                            <span className="input-group-text">Customer</span>
                                             <select className="form-select"
-                                                onChange={this.changeDepartment}
-                                                value={Department}>
-                                                {departments.map(dep =>
-                                                    <option key={dep.DepartmentId}>
-                                                        {dep.DepartmentName}
+                                                onChange={this.changeCustomer}
+                                                value={Customer}>
+                                                {Customers.map(dep =>
+                                                    <option key={dep.CustomerId}>
+                                                        {dep.CustomerName}
                                                     </option>)}
                                             </select>
                                         </div>
@@ -279,14 +279,14 @@ export class Employee extends Component {
                                     </div>
                                 </div>
 
-                                {EmployeeId === 0 ?
+                                {ProductId === 0 ?
                                     <button type="button"
                                         className="btn btn-primary float-start"
                                         onClick={() => this.createClick()}
                                     >Create</button>
                                     : null}
 
-                                {EmployeeId !== 0 ?
+                                {ProductId !== 0 ?
                                     <button type="button"
                                         className="btn btn-primary float-start"
                                         onClick={() => this.updateClick()}
