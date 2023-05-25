@@ -289,3 +289,5 @@ D:\GIT\CURD-example\CURD-example\WebAPI\WebAPI\obj\Debug\netcoreapp3.1\WebAPI.pd
 D:\GIT\CURD-example\CURD-example\WebAPI\WebAPI\obj\Debug\netcoreapp3.1\WebAPI.genruntimeconfig.cache
 D:\GIT\CURD-example\CURD-example\WebAPI\WebAPI\bin\Debug\netcoreapp3.1\Humanizer.dll
 D:\GIT\CURD-example\CURD-example\WebAPI\WebAPI\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+D:\GIT\CURD-example\CURD-example\WebAPI\WebAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
+D:\GIT\CURD-example\CURD-example\WebAPI\WebAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

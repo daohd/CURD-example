@@ -48,9 +48,9 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("updateCustomer")]
-        public async Task<IActionResult> Put(Customer cus)
+        public async Task<IActionResult> updateCustomer(CustomerInput cus)
         {
-            await _customer.UpdateCustomer(cus);
+            await _customer.UpdateCustomer(_mapper.Map<Customer>(cus));
             return Ok("Updated Successfully");
         }
 
