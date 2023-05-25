@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace WebAPI.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerRepository _customer;
+        private readonly IMapper _mapper;
 
         public CustomerController(ICustomerRepository department)
         {
@@ -27,17 +29,17 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         [Route("GetCustomerByID/{Id}")]
-        public async Task<IActionResult> GetDeptById(int Id)
+        public async Task<IActionResult> GetCustomerByID(int Id)
         {
             return Ok(await _customer.GetCustomerByID(Id));
         }
 
         [HttpPost]
         [Route("addCustomer")]
-        public async Task<IActionResult> Post(Customer cus)
+        public async Task<IActionResult> addCustomer(CustomerInput cus)
         {
-            var result = await _customer.InsertCustomer(cus);
-            if (String.IsNullOrEmpty(result.FullName))
+            var result = await _customer.InsertCustomer(_mapper.Map<Customer>(cus));
+            if (result.CustomerId <= 0)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
             }

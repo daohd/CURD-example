@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using WebAPI.Repository;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace WebAPI.Controllers
 {
@@ -16,6 +17,7 @@ namespace WebAPI.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly IProductRepository _Product;
         private readonly ICustomerRepository _customer;
+        private readonly IMapper _mapper;
 
         public ProductController(IWebHostEnvironment env,
             IProductRepository Product,
@@ -36,10 +38,10 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("addProduct")]
-        public async Task<IActionResult> InsertProduct(Product product)
+        public async Task<IActionResult> InsertProduct(ProductInput product)
         {
 
-            var result = await _Product.InsertProduct(product);
+            var result = await _Product.InsertProduct(_mapper.Map<Product>(product));
             if (result == null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
@@ -51,9 +53,9 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("updateProduct")]
-        public async Task<IActionResult> UpdateProduct(Product product)
+        public async Task<IActionResult> UpdateProduct(ProductInput product)
         {
-            var result = await _Product.UpdateProduct(product);
+            var result = await _Product.UpdateProduct(_mapper.Map<Product>(product));
             if (result == null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");

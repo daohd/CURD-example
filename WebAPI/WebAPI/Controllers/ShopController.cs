@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace WebAPI.Controllers
     {
         private readonly IShopRepository _shop;
         private readonly ICustomerRepository _customer;
+        private readonly IMapper _mapper;
 
         public ShopController(IShopRepository shop,
                                          ICustomerRepository customer)
@@ -37,9 +39,9 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("addShop")]
-        public async Task<IActionResult> InsertShop(Shop shop)
+        public async Task<IActionResult> InsertShop(ShopInput shop)
         {
-            var result = await _shop.InsertShop(shop);
+            var result = await _shop.InsertShop(_mapper.Map<Shop>(shop));
             if (result.ShopId == 0)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
@@ -50,9 +52,9 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("updateShop")]
-        public async Task<IActionResult> UpdateShop(Shop emp)
+        public async Task<IActionResult> UpdateShop(ShopInput shop)
         {
-            await _shop.UpdateShop(emp);
+            await _shop.UpdateShop(_mapper.Map<Shop>(shop));
             return Ok("Updated Successfully");
         }
 

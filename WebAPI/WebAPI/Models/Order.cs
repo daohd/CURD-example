@@ -7,18 +7,22 @@ namespace WebAPI.Models
 {
     [Table("Order")]
 
-    public class Order
+    public class Order: OrderInput
     {
         [Key]
         public int OrderID { get; set; }
 
-        public int CustomerId { get; set; }
 
-        public int ProductId { get; set; }
         public virtual Customer Customer { get; set; } = null!;
 
         public virtual Product Product { get; set; } = null!;
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.Now;
 
+    }
+
+    public class OrderInput
+    {
+        public int CustomerId { get; set; }
+        public int ProductId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace WebAPI.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository _order;
+        private readonly IMapper _mapper;
 
         public OrderController(IOrderRepository order)
         {
@@ -27,10 +29,10 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("createOrder")]
-        public async Task<IActionResult> InsertProduct(Order order)
+        public async Task<IActionResult> InsertProduct(OrderInput order)
         {
 
-            var result = await _order.CreateOrder(order);
+            var result = await _order.CreateOrder(_mapper.Map<Order>(order));
             if (result == null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
