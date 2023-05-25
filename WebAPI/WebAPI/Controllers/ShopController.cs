@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetEmployee")]
+        [Route("getShop")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _shop.GetShops());
@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("InsertShop")]
+        [Route("addShop")]
         public async Task<IActionResult> InsertShop(Shop shop)
         {
             var result = await _shop.InsertShop(shop);
@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPut]
-        [Route("UpdateShop")]
+        [Route("updateShop")]
         public async Task<IActionResult> UpdateShop(Shop emp)
         {
             await _shop.UpdateShop(emp);
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteShop")]
+        [Route("deleteShop")]
         //[HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {

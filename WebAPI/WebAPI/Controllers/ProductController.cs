@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPost]
-        [Route("InsertProduct")]
+        [Route("addProduct")]
         public async Task<IActionResult> InsertProduct(Product product)
         {
 
@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
 
 
         [HttpPut]
-        [Route("UpdateProduct")]
+        [Route("updateProduct")]
         public async Task<IActionResult> UpdateProduct(Product product)
         {
             var result = await _Product.UpdateProduct(product);

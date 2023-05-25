@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetCustomer")]
+        [Route("getCustomer")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _customer.GetCustomer());
@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("AddDepartment")]
+        [Route("addCustomer")]
         public async Task<IActionResult> Post(Customer cus)
         {
             var result = await _customer.InsertCustomer(cus);
@@ -45,7 +45,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateCustomer")]
+        [Route("updateCustomer")]
         public async Task<IActionResult> Put(Customer cus)
         {
             await _customer.UpdateCustomer(cus);
@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
 
         [HttpDelete]
         //[HttpDelete("{id}")]
-        [Route("DeleteCustomer")]
+        [Route("deleteCustomer")]
         public JsonResult Delete(int id)
         {
             _customer.DeleteCustomer(id);
