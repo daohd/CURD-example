@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Writers;
+using System.Reflection.Metadata;
 using WebAPI.Models;
 
 namespace WebAPI.Repository
@@ -9,6 +11,7 @@ namespace WebAPI.Repository
         {
 
         }
+
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }

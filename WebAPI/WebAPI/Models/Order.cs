@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,10 +11,10 @@ namespace WebAPI.Models
     {
         [Key]
         public int OrderID { get; set; }
-        public int CustomerID { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerEmail { get; set; }
-        public List<Product> Prducts  { get; set; }
+        public Customer Customer { get; set; }
+
+        public ICollection<Product> Products { get; set; }
+        public DateTime CreateDate { get; set; }
 
     }
 }

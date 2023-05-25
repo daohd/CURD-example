@@ -47,16 +47,15 @@ namespace WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CustomerEmail")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerID")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("OrderID");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Order");
                 });
@@ -84,6 +83,8 @@ namespace WebAPI.Migrations
 
                     b.HasIndex("OrderID");
 
+                    b.HasIndex("ShopId");
+
                     b.ToTable("Product");
                 });
 
@@ -105,16 +106,38 @@ namespace WebAPI.Migrations
                     b.ToTable("Shop");
                 });
 
+            modelBuilder.Entity("WebAPI.Models.Order", b =>
+                {
+                    b.HasOne("WebAPI.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("WebAPI.Models.Product", b =>
                 {
                     b.HasOne("WebAPI.Models.Order", null)
-                        .WithMany("Prducts")
+                        .WithMany("Products")
                         .HasForeignKey("OrderID");
+
+                    b.HasOne("WebAPI.Models.Shop", "Shop")
+                        .WithMany("Products")
+                        .HasForeignKey("ShopId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Shop");
                 });
 
             modelBuilder.Entity("WebAPI.Models.Order", b =>
                 {
-                    b.Navigation("Prducts");
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.Shop", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
