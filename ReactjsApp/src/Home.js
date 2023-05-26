@@ -6,17 +6,18 @@ const { Option } = Select;
 const columns = [
     {
       title: 'Order ID',
-      dataIndex: 'orderid',
+      dataIndex: 'OrderID',
     },
     {
       title: 'Customer',
-      dataIndex: 'CustomerName',
+      dataIndex: 'FullName' - 'Email',
+    
       sorter: (a, b) => a.Customer - b.CustomerId,
      
     },
     {
-      title: 'ProductID',
-      dataIndex: 'ProductId',
+      title: 'Product',
+      dataIndex: 'ProductId'- 'Price' ,
       sorter: (a, b) => a.ProductId - b.ProductId,
     },
    
@@ -86,10 +87,10 @@ export class Home extends Component {
    
 
     createClick() {
-      var lstTemp =  [];
-      lstTemp.push({
-            ProductId: Product,
-          });
+    //   var lstTemp =  [];
+    //   lstTemp.push({
+    //         ProductId: Product,
+    //       });
         // lstProduct= lstProduct.push(ProductId:Product)
         // lstProduct = lstProduct.push({
         //     ...o,
