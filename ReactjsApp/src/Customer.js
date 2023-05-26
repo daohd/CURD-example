@@ -1,33 +1,7 @@
 import React, { Component } from 'react';
 import { variables } from './Variables.js';
 import { Table } from 'antd';
-const columns = [
-    {
-      title: 'Customer ID',
-      dataIndex: 'CustomerId',
-      sorter: (a, b) => a.CustomerId - b.CustomerId,
-    },
-    {
-      title: 'CustomerName',
-      dataIndex: 'FullName',
-      filters: [
-        {
-          text: 'London',
-          value: 'London',
-        },
-        {
-          text: 'New York',
-          value: 'New York',
-        },
-      ],
-      onFilter: (value, record) => record.FullName.indexOf(value) === 0,
-    sorter: (a, b) => a.FullName.length - b.FullName.length,
-    sortDirections: ['descend'],
-      width: '60%',
-    },
-   
-  ];
-  
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
@@ -91,6 +65,12 @@ export class Customer extends Component {
         fetch(variables.API_URL + 'Customer/getCustomer')
             .then(response => response.json())
             .then(data => {
+                data = data.map((element) => ({
+                    ...element,
+                    text: element.FullName,
+                    value:element.FullName,
+                   
+                  }));
                 this.setState({ Customers: data, CustomersWithoutFilter: data });
             });
     }
@@ -187,13 +167,36 @@ export class Customer extends Component {
     render() {
         const {
             Customers,
+            CustomerIdFilter,
             modalTitle,
             CustomerId,
             CustomerName,
             Email,
             DOB,
         } = this.state;
-
+        const columns = [
+            {
+              title: 'Customer ID',
+              dataIndex: 'CustomerId',
+              sorter: (a, b) => a.CustomerId - b.CustomerId,
+            },
+            {
+              title: 'CustomerName',
+              dataIndex: 'FullName',
+              filters: Customers,
+              onFilter: (value, record) => record.FullName.indexOf(value) === 0,
+            sorter: (a, b) => a.FullName.length - b.FullName.length,
+            sortDirections: ['descend'],
+              width: '60%',
+            },
+            {
+                title: 'Email',
+                dataIndex: 'Email',
+                sorter: (a, b) => a.Email.length - b.Email.length,
+                sortDirections: ['descend'],
+                width: '60%',
+              },
+          ];
         return (
          
             <div>

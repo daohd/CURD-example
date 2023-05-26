@@ -29,6 +29,16 @@ const App = () => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+  // function Content(){
+  //   return <div>
+  //      <Routes>
+  //         <Route path='/home' Component={Home}></Route>
+  //         <Route path='/Customer' Component={Customer}></Route>
+  //         <Route path='/Shop' Component={Shop}></Route>
+  //         <Route path='/Product' Component={Product}></Route>
+  //         </Routes>
+  //   </div>
+  // }
   return (
     <Layout
       style={{

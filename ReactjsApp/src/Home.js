@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { variables } from './Variables.js';
-import { Table,Select } from 'antd';
+import { Table,Select, Alert } from 'antd';
 import { Product } from './Product.js';
 const { Option } = Select;
 const columns = [
@@ -12,13 +12,15 @@ const columns = [
       title: 'Customer',
       dataIndex: 'CustomerInfor',
     
-      sorter: (a, b) => a.CustomerId - b.CustomerId,
+      sorter: (a, b) => a.CustomerInfor.length - b.CustomerInfor.length,
+      sortDirections: ['descend'],
      
     },
     {
       title: 'Product',
       dataIndex: 'ProductInfor' ,
-      sorter: (a, b) => a.ProductId - b.ProductId,
+      sorter: (a, b) => a.ProductInfor.length - b.ProductInfor.length,
+      sortDirections: ['descend'],
     },
    
   ];
@@ -52,18 +54,23 @@ export class Home extends Component {
         fetch(variables.API_URL + 'Order/GetOrders')
         .then(response => response.json())
         .then(data => {
-            
-            data = data.map((element) => ({
-                ...element,
-                customerName: element.Customer.FullName,
-                ProductName:element.Product.ProductName,
-                Price:element.Product.Price,
-                email:element.Customer.Email,
-                CustomerInfor: element.Customer.FullName +" - "+element.Customer.Email,
-                ProductInfor:element.Product.ProductName + " - "+element.Product.Price
-              }));
-              console.log(data);
-            this.setState({ Orders: data });
+            if( data?.length>0 ){
+                data = data.map((element) => ({
+                    ...element,
+                    customerName: element.Customer.FullName,
+                    ProductName:element.Product.ProductName,
+                    Price:element.Product.Price,
+                    email:element.Customer.Email,
+                    CustomerInfor: element.Customer.FullName +" - "+element.Customer.Email,
+                    ProductInfor:element.Product.ProductName + " - "+element.Product.Price,
+                   
+                  }));
+                  console.log(data);
+                this.setState({ Orders: data });
+            }
+            else{
+                alert('Không đủ dữ liệu');
+            }
         });
         
             fetch(variables.API_URL + 'Customer/GetCustomer')
