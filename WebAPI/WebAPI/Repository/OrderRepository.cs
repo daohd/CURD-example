@@ -9,7 +9,7 @@ namespace WebAPI.Repository
 {
     public interface IOrderRepository
     {
-        Task<IEnumerable<Order>> GetOrders();
+        Task<IEnumerable<OrderOutPut>> GetOrders();
         Task<Order> CreateOrder(Order objorder);
         
     }
@@ -24,12 +24,29 @@ namespace WebAPI.Repository
             _appDBContext = context ?? throw new ArgumentNullException(nameof(context));
         }        
 
-        public async Task<IEnumerable<Order>> GetOrders()
+        public async Task<IEnumerable<OrderOutPut>> GetOrders()
         {
 
             var lst =  await _appDBContext.Orders.AsNoTracking().Include(o=>o.Customer).Include(o=>o.Product).ThenInclude(o=>o.Shop).OrderByDescending(o=>o.CreateDate).ToListAsync();
 
-            return lst;
+
+            var result = new List<OrderOutPut>();
+
+            foreach (var order in lst)
+            {
+                result.Add(new OrderOutPut
+                {
+                    CustomerId = order.CustomerId,
+                    Email = order.Customer.Email,
+                    ShopName = order.Product.Shop.ShopName,
+                    Location = order.Product.Shop.Location,
+                    ProductName = order.Product.ProductName,
+                    Price = order.Product.Price,
+
+                });
+            }
+
+            return result;
         }
 
         public async Task<Order> CreateOrder(Order objorder)

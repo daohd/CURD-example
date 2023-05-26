@@ -33,7 +33,7 @@ namespace WebAPI.Controllers
         {
 
             if (await _customer.CountCustomer() < 30 || await _shop.CountShop() < 3 || await _Product.CountProduct() < 30)
-                return Ok(new Order());
+                return Ok(new OrderOutPut());
 
             return Ok(await _order.GetOrders());
         }

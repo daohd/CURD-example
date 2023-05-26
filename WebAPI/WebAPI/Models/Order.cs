@@ -29,4 +29,18 @@ namespace WebAPI.Models
 
         //public List<Product> lstProduct {get;set;}
     }
+
+    public class OrderOutPut
+    {
+        public int CustomerId { get; set; }
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
+        public double Price { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string Location { get; set; }
+        public string ShopName { get; set; }
+
+        //public List<Product> lstProduct {get;set;}
+    }
 }
