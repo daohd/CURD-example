@@ -50,7 +50,7 @@ export class Product extends Component {
             modalTitle: "",
             ProductId: 0,
             ProductName: "",
-            Shop: 0,
+            Shop: undefined,
             Price: 0,
             DateOfJoining: "",
             PhotoFileName: "anonymous.png",
@@ -96,6 +96,8 @@ export class Product extends Component {
             ProductId: 0,
             ProductName: "",
             Customer: "",
+            Price:0,
+            Shop:undefined,
             DateOfJoining: "",
             PhotoFileName: "anonymous.png"
         });
@@ -244,6 +246,7 @@ export class Product extends Component {
                                         <label>Shop <span style={{ color: 'red' }}>*</span></label>
                                             <select className="txtShop" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
                                                 onChange={this.changeShop}
+                                                placeholder="chọn shop"
                                                 value={Shop}>
                                                 {Shops.map(dep =>
                                                     <option key={dep.ShopId} value={dep.ShopId}>
