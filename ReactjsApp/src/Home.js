@@ -9,14 +9,14 @@ const columns = [
     },
     {
       title: 'Customer ID',
-      dataIndex: 'customerid',
-      sorter: (a, b) => a.customerid - b.customerid,
+      dataIndex: 'CustomerId',
+      sorter: (a, b) => a.CustomerId - b.CustomerId,
      
     },
     {
       title: 'ProductID',
-      dataIndex: 'productid',
-      sorter: (a, b) => a.productid - b.productid,
+      dataIndex: 'ProductId',
+      sorter: (a, b) => a.ProductId - b.ProductId,
     },
    
   ];

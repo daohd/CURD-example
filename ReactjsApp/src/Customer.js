@@ -4,12 +4,12 @@ import { Table } from 'antd';
 const columns = [
     {
       title: 'Customer ID',
-      dataIndex: 'customerid',
-      sorter: (a, b) => a.customerid - b.customerid,
+      dataIndex: 'CustomerId',
+      sorter: (a, b) => a.CustomerId - b.CustomerId,
     },
     {
       title: 'CustomerName',
-      dataIndex: 'customername',
+      dataIndex: 'FullName',
       filters: [
         {
           text: 'London',
@@ -41,7 +41,8 @@ export class Customer extends Component {
             modalTitle: "",
             CustomerName: "",
             CustomerId: 0,
-
+            Email: "",
+            DOB:"",
             CustomerIdFilter: "",
             CustomerNameFilter: "",
             CustomersWithoutFilter: []
@@ -99,7 +100,10 @@ export class Customer extends Component {
     }
 
     changeCustomerName = (e) => {
-        this.setState({ CustomerName: e.target.value });
+        this.setState({ FullName: e.target.value });
+    }
+    changeEmail = (e) => {
+        this.setState({ Email: e.target.value });
     }
 
     addClick() {
@@ -182,7 +186,9 @@ export class Customer extends Component {
             Customers,
             modalTitle,
             CustomerId,
-            CustomerName
+            CustomerName,
+            Email,
+            DOB,
         } = this.state;
 
         return (
@@ -213,7 +219,12 @@ export class Customer extends Component {
                                         value={CustomerName} required
                                         onChange={this.changeCustomerName} />
                                 </div>
-
+                                <div className="input-group col-3" style={{ marginLeft: '50px' }}>
+                                <label>Email<span style={{ color: 'red' }}>*</span></label>
+                                    <input type="text" className="txtEmail" style={{width:'400px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                        value={CustomerName} required
+                                        onChange={this.changeCustomerName} />
+                                </div>
                                 {CustomerId === 0 ?
                                     <button type="button"
                                         className="btn btn-primary"

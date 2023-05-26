@@ -4,12 +4,12 @@ import { Table } from 'antd';
 const columns = [
     {
       title: 'Product ID',
-      dataIndex: 'productid',
-      sorter: (a, b) => a.productid - b.productid,
+      dataIndex: 'ProductId',
+      sorter: (a, b) => a.ProductId - b.ProductId,
     },
     {
       title: 'ProductName',
-      dataIndex: 'productname',
+      dataIndex: 'ProductName',
       filters: [
         {
           text: 'London',
@@ -50,7 +50,7 @@ export class Product extends Component {
             modalTitle: "",
             ProductId: 0,
             ProductName: "",
-            Shop: "",
+            Shop: 0,
             DateOfJoining: "",
             PhotoFileName: "anonymous.png",
             PhotoPath: variables.PHOTO_URL
@@ -242,9 +242,9 @@ export class Product extends Component {
                                         <label>Shop<span style={{ color: 'red' }}>*</span></label>
                                             <select className="form-select"
                                                 onChange={this.changeShop}
-                                                value={Shops}>
+                                                value={Shop}>
                                                 {Shops.map(dep =>
-                                                    <option key={dep.ShopID}>
+                                                    <option key={dep.ShopId} value={dep.ShopId}>
                                                         {dep.ShopName}
                                                     </option>)}
                                             </select>
