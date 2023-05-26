@@ -17,10 +17,11 @@ namespace WebAPI.Controllers
         private readonly IMapper _mapper;
 
         public ShopController(IShopRepository shop,
-                                         ICustomerRepository customer)
+                                         ICustomerRepository customer,IMapper mapper)
         {
             _shop = shop ?? throw new ArgumentNullException(nameof(shop));
             _customer = customer ?? throw new ArgumentNullException(nameof(customer));
+            _mapper = mapper;
         }
 
         [HttpGet]

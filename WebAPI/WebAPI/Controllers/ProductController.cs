@@ -21,11 +21,12 @@ namespace WebAPI.Controllers
 
         public ProductController(IWebHostEnvironment env,
             IProductRepository Product,
-            ICustomerRepository customer)
+            ICustomerRepository customer,IMapper mapper)
         {
             _env = env;
             _Product = Product ?? throw new ArgumentNullException(nameof(Product));
             _customer = customer ?? throw new ArgumentNullException(nameof(customer));
+            _mapper = mapper;
         }
 
         [HttpGet]

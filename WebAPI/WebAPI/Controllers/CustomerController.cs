@@ -15,9 +15,10 @@ namespace WebAPI.Controllers
         private readonly ICustomerRepository _customer;
         private readonly IMapper _mapper;
 
-        public CustomerController(ICustomerRepository department)
+        public CustomerController(ICustomerRepository customer,IMapper mapper)
         {
-            _customer = department ?? throw new ArgumentNullException(nameof(department));
+            _customer = customer ?? throw new ArgumentNullException(nameof(customer));
+            _mapper = mapper;
         }
 
         [HttpGet]

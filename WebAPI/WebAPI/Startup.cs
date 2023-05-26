@@ -11,6 +11,7 @@ using WebAPI.Repository;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace WebAPI
 {
@@ -31,6 +32,7 @@ namespace WebAPI
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShopRepository, ShopRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddAutoMapper(typeof(Program).Assembly);
 
             services.AddDbContext<APIDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLConnectionString")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
