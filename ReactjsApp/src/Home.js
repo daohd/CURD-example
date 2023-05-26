@@ -10,14 +10,14 @@ const columns = [
     },
     {
       title: 'Customer',
-      dataIndex: 'FullName' - 'Email',
+      dataIndex: 'CustomerInfor',
     
-      sorter: (a, b) => a.Customer - b.CustomerId,
+      sorter: (a, b) => a.CustomerId - b.CustomerId,
      
     },
     {
       title: 'Product',
-      dataIndex: 'ProductId'- 'Price' ,
+      dataIndex: 'ProductInfor' ,
       sorter: (a, b) => a.ProductId - b.ProductId,
     },
    
@@ -52,6 +52,17 @@ export class Home extends Component {
         fetch(variables.API_URL + 'Order/GetOrders')
         .then(response => response.json())
         .then(data => {
+            
+            data = data.map((element) => ({
+                ...element,
+                customerName: element.Customer.FullName,
+                ProductName:element.Product.ProductName,
+                Price:element.Product.Price,
+                email:element.Customer.Email,
+                CustomerInfor: element.Customer.FullName +" - "+element.Customer.Email,
+                ProductInfor:element.Product.ProductName + " - "+element.Product.Price
+              }));
+              console.log(data);
             this.setState({ Orders: data });
         });
         
