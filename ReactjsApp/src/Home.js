@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { variables } from './Variables.js';
 import { Table,Select } from 'antd';
+import { Product } from './Product.js';
 const { Option } = Select;
 const columns = [
     {
@@ -34,8 +35,8 @@ export class Home extends Component {
             Orders:[],
             modalTitle: "",
             OrderID: 0,
-            Customer: "",
-            Product: "",
+            Customer: 0,
+            Product: 0,
             lstProduct:[],
            
         }
@@ -78,13 +79,23 @@ export class Home extends Component {
             OrderId: 0,
             Customer: undefined,
             Product: undefined,
-          
+          lstProduct:[],
           
         });
     }
    
 
     createClick() {
+      var lstTemp =  [];
+      lstTemp.push({
+            ProductId: Product,
+          });
+        // lstProduct= lstProduct.push(ProductId:Product)
+        // lstProduct = lstProduct.push({
+        //     ...o,
+        //     ProductId: Product,
+        //   }));
+        // }
         fetch(variables.API_URL + 'Order/createOrder', {
             method: 'POST',
             headers: {
@@ -93,7 +104,7 @@ export class Home extends Component {
             },
             body: JSON.stringify({
                 CustomerId: this.state.Customer,
-                lstProduct: this.state.lstProduct,
+                ProductId: this.state.Product,
                
             })
         })
@@ -122,6 +133,7 @@ export class Home extends Component {
             OrderID,
             Product,
             Customer,
+            lstProduct,
             
         } = this.state;
 
