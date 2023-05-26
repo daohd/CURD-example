@@ -13,6 +13,7 @@ namespace WebAPI.Repository
         Task<Product> GetProductByName(string Productname);
         Task<Product> InsertProduct(Product objProduct);
         Task<Product> UpdateProduct(Product objProduct);
+        Task<int> CountProduct();
         bool DeleteProduct(int ID);
     }
     public class ProductRepository : IProductRepository
@@ -41,6 +42,11 @@ namespace WebAPI.Repository
             _appDBContext.Products.Add(objProduct);
             await _appDBContext.SaveChangesAsync();
             return objProduct;
+        }
+
+        public async Task<int> CountProduct()
+        {
+            return await _appDBContext.Products.AsNoTracking().CountAsync();
         }
 
         public async Task<Product> UpdateProduct(Product objProduct)

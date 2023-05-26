@@ -30,6 +30,7 @@ namespace WebAPI
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IShopRepository, ShopRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddDbContext<APIDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLConnectionString")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

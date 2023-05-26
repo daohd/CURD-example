@@ -20,7 +20,7 @@ namespace WebAPI.Models
     {
         [StringLength(250)]
         public string ProductName { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public int ShopId { get; set; }
     }
 }

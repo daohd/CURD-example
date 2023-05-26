@@ -26,7 +26,8 @@ namespace WebAPI.Repository
 
         public async Task<IEnumerable<Order>> GetOrders()
         {
-            var lst =  await _appDBContext.Orders.ToListAsync();
+
+            var lst =  await _appDBContext.Orders.AsNoTracking().Include(o=>o.Customer).Include(o=>o.Product).ThenInclude(o=>o.Shop).OrderByDescending(o=>o.CreateDate).ToListAsync();
 
             return lst;
         }

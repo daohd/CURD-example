@@ -13,6 +13,7 @@ namespace WebAPI.Repository
         Task<Customer> GetCustomerByID(int ID);
         Task<Customer> InsertCustomer(Customer objDepartment);
         Task<Customer> UpdateCustomer(Customer objDepartment);
+        Task<int> CountCustomer();
         bool DeleteCustomer(int ID);
     }
 
@@ -44,6 +45,11 @@ namespace WebAPI.Repository
             await _appDBContext.SaveChangesAsync();
             return objcus;
 
+        }
+
+        public async Task<int> CountCustomer()
+        {
+            return  await _appDBContext.Customers.AsNoTracking().CountAsync();
         }
 
         public async Task<Customer> UpdateCustomer(Customer objcus)

@@ -7,12 +7,14 @@ namespace WebAPI.Models
 {
     [Table("Order")]
 
-    public class Order: OrderInput
+    public class Order
     {
         [Key]
         public int OrderID { get; set; }
 
+        public int CustomerId { get; set; }
 
+        public int ProductId { get; set; }
         public virtual Customer Customer { get; set; } = null!;
 
         public virtual Product Product { get; set; } = null!;
@@ -23,6 +25,8 @@ namespace WebAPI.Models
     public class OrderInput
     {
         public int CustomerId { get; set; }
-        public int ProductId { get; set; }
+        //public int ProductId { get; set; }
+
+        public List<Product> lstProduct {get;set;}
     }
 }

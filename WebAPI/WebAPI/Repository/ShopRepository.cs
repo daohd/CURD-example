@@ -13,6 +13,7 @@ namespace WebAPI.Repository
         Task<Shop> GetShopByID(int ID);
         Task<Shop> InsertShop(Shop objShop);
         Task<Shop> UpdateShop(Shop objShop);
+        Task<int> CountShop();
         bool DeleteShop(int ID);
     }
 
@@ -31,6 +32,11 @@ namespace WebAPI.Repository
             var lst =  await _appDBContext.Shops.ToListAsync();
 
             return lst.OrderByDescending(o => o.Location).ToList() ;
+        }
+
+        public async Task<int> CountShop()
+        {
+            return await _appDBContext.Shops.AsNoTracking().CountAsync();
         }
 
         public async Task<Shop> GetShopByID(int ID)
