@@ -179,6 +179,7 @@ export class Customer extends Component {
               title: 'Customer ID',
               dataIndex: 'CustomerId',
               sorter: (a, b) => a.CustomerId - b.CustomerId,
+              width: '30%',
             },
             {
               title: 'CustomerName',
@@ -187,14 +188,14 @@ export class Customer extends Component {
               onFilter: (value, record) => record.FullName.indexOf(value) === 0,
             sorter: (a, b) => a.FullName.length - b.FullName.length,
             sortDirections: ['descend'],
-              width: '60%',
+              width: '50%',
             },
             {
                 title: 'Email',
                 dataIndex: 'Email',
                 sorter: (a, b) => a.Email.length - b.Email.length,
                 sortDirections: ['descend'],
-                width: '60%',
+                width: '30%',
               },
           ];
         return (

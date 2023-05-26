@@ -1,41 +1,7 @@
 import React, { Component } from 'react';
 import { variables } from './Variables.js';
 import { Table } from 'antd';
-const columns = [
-    {
-      title: 'Product ID',
-      dataIndex: 'ProductId',
-      sorter: (a, b) => a.ProductId - b.ProductId,
-    },
-    {
-      title: 'ProductName',
-      dataIndex: 'ProductName',
-      filters: [
-        {
-          text: 'London',
-          value: 'London',
-        },
-        {
-          text: 'New York',
-          value: 'New York',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      onFilter: (value, record) => record.name.includes(value),
-      width: '30%',
-    },
-    {
-      title: 'Shop',
-      dataIndex: 'shopid',
-      sorter: (a, b) => a.shopid - b.shopid,
-    },
-    {
-        title: 'Price',
-        dataIndex: 'Price',
-        sorter: (a, b) => a.Price - b.Price,
-      },
-  ];
+
   const onChange = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
@@ -63,6 +29,12 @@ export class Product extends Component {
         fetch(variables.API_URL + 'Product/GetProduct')
             .then(response => response.json())
             .then(data => {
+                data = data.map((element) => ({
+                    ...element,
+                    text: element.ProductName,
+                    value:element.ProductName,
+                   
+                  }));
                 this.setState({ Products: data });
             });
 
@@ -210,7 +182,32 @@ export class Product extends Component {
             PhotoPath,
             PhotoFileName
         } = this.state;
-
+        const columns = [
+            {
+              title: 'Product ID',
+              dataIndex: 'ProductId',
+              sorter: (a, b) => a.ProductId - b.ProductId,
+            },
+            {
+              title: 'ProductName',
+              dataIndex: 'ProductName',
+              filters: Products,
+              filterMode: 'tree',
+              filterSearch: true,
+              onFilter: (value, record) => record.name.includes(value),
+              width: '30%',
+            },
+            {
+              title: 'Shop',
+              dataIndex: 'shopid',
+              sorter: (a, b) => a.shopid - b.shopid,
+            },
+            {
+                title: 'Price',
+                dataIndex: 'Price',
+                sorter: (a, b) => a.Price - b.Price,
+              },
+          ];
         return (
             <div>
 
