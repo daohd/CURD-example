@@ -105,6 +105,9 @@ export class Customer extends Component {
     changeEmail = (e) => {
         this.setState({ Email: e.target.value });
     }
+    changeDOB = (e) => {
+        this.setState({ DOB: e.target.value });
+    }
 
     addClick() {
         this.setState({
@@ -222,9 +225,15 @@ export class Customer extends Component {
                                 <div className="input-group col-3" style={{ marginLeft: '50px' }}>
                                 <label>Email<span style={{ color: 'red' }}>*</span></label>
                                     <input type="text" className="txtEmail" style={{width:'400px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
-                                        value={CustomerName} required
-                                        onChange={this.changeCustomerName} />
+                                        value={Email} required
+                                        onChange={this.changeEmail} />
                                 </div>
+                                <div className="input-group col-3" style={{ marginLeft: '50px' }}>
+                                <label>Date of Birth<span style={{ color: 'red' }}>*</span></label>
+                                            <input type="date" className="form-control"
+                                                value={DOB}
+                                                onChange={this.changeDOB} />
+                                        </div>
                                 {CustomerId === 0 ?
                                     <button type="button"
                                         className="btn btn-primary"

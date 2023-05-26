@@ -4,12 +4,12 @@ import { Table } from 'antd';
 const columns = [
     {
       title: 'Shop ID',
-      dataIndex: 'shopid',
-      sorter: (a, b) => a.shopid - b.shopid,
+      dataIndex: 'ShopId',
+      sorter: (a, b) => a.ShopId - b.ShopId,
     },
     {
       title: 'Shop Name',
-      dataIndex: 'shopname',
+      dataIndex: 'ShopName',
       filters: [
         {
           text: 'London',
@@ -20,14 +20,14 @@ const columns = [
           value: 'New York',
         },
       ],
-      filterMode: 'tree',
+      
       filterSearch: true,
-      onFilter: (value, record) => record.shopname.includes(value),
+      onFilter: (value, record) => record.ShopName.includes(value),
       width: '30%',
     },
     {
       title: 'Location',
-      dataIndex: 'location',
+      dataIndex: 'Location',
       filters: [
         {
           text: 'London',
@@ -38,7 +38,7 @@ const columns = [
           value: 'New York',
         },
       ],
-      onFilter: (value, record) => record.location.startsWith(value),
+      onFilter: (value, record) => record.Location.startsWith(value),
       filterSearch: true,
       width: '40%',
     },
