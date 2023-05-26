@@ -8,9 +8,9 @@ const columns = [
       dataIndex: 'orderid',
     },
     {
-      title: 'Customer ID',
-      dataIndex: 'CustomerId',
-      sorter: (a, b) => a.CustomerId - b.CustomerId,
+      title: 'Customer',
+      dataIndex: 'CustomerName',
+      sorter: (a, b) => a.Customer - b.CustomerId,
      
     },
     {
@@ -41,7 +41,7 @@ export class Home extends Component {
     }
 
     refreshList() {
-        fetch(variables.API_URL + 'Product/GetProduct')
+        fetch(variables.API_URL + 'Order/GetOrders')
         .then(response => response.json())
         .then(data => {
             this.setState({ Products: data });

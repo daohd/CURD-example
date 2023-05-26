@@ -20,9 +20,9 @@ const columns = [
           value: 'New York',
         },
       ],
-      filterMode: 'tree',
-      filterSearch: true,
-      onFilter: (value, record) => record.name.includes(value),
+      onFilter: (value, record) => record.FullName.indexOf(value) === 0,
+    sorter: (a, b) => a.FullName.length - b.FullName.length,
+    sortDirections: ['descend'],
       width: '60%',
     },
    
@@ -100,7 +100,7 @@ export class Customer extends Component {
     }
 
     changeCustomerName = (e) => {
-        this.setState({ FullName: e.target.value });
+        this.setState({ CustomerName: e.target.value });
     }
     changeEmail = (e) => {
         this.setState({ Email: e.target.value });
@@ -217,20 +217,20 @@ export class Customer extends Component {
 
                             <div className="modal-body">
                                 <div className="input-group col-3" style={{ marginLeft: '50px' }}>
-                                <label>Customer Name<span style={{ color: 'red' }}>*</span></label>
-                                    <input type="text" className="txtCustomerName" style={{width:'400px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
-                                        value={CustomerName} required
+                                <label>Customer Name</label>
+                                    <input type="text" className="txtCustomer" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                        value={CustomerName} 
                                         onChange={this.changeCustomerName} />
                                 </div>
-                                <div className="input-group col-3" style={{ marginLeft: '50px' }}>
-                                <label>Email<span style={{ color: 'red' }}>*</span></label>
-                                    <input type="text" className="txtEmail" style={{width:'400px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
-                                        value={Email} required
+                                <div className="input-group col-3" style={{ marginLeft: '50px',marginTop:'10px' }}>
+                                <label>Email</label>
+                                    <input type="text" className="txtEmail" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                        value={Email} 
                                         onChange={this.changeEmail} />
                                 </div>
-                                <div className="input-group col-3" style={{ marginLeft: '50px' }}>
+                                <div className="input-group col-3" style={{ marginLeft: '50px',marginTop:'10px' }}>
                                 <label>Date of Birth<span style={{ color: 'red' }}>*</span></label>
-                                            <input type="date" className="form-control"
+                                            <input type="date" className="txtDOB"style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
                                                 value={DOB}
                                                 onChange={this.changeDOB} />
                                         </div>
@@ -244,7 +244,7 @@ export class Customer extends Component {
 
                                 {CustomerId !== 0 ?
                                     <button type="button"
-                                        className="btn btn-primary"
+                                        className="btn btn-primary" data-bs-dismiss="modal"
                                         onClick={() => this.updateClick()}
                                         style={{float:'right', marginTop:'10px',borderRadius:'10px'}}
                                     >Update</button>
