@@ -43,23 +43,29 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> createOrder(OrderInput order)
         {
 
-            if (order == null || order.lstProduct?.Count <= 0) return NotFound("Not found");
+            //if (order == null || order.lstProduct?.Count <= 0) return NotFound("Not found");
 
-            foreach (var item in order.lstProduct) {
+            //foreach (var item in order.lstProduct) {
 
-                var objorder = new Order()
-                {
-                    CustomerId = order.CustomerId,
-                    ProductId = item.ProductId
-                };
+            //    var objorder = new Order()
+            //    {
+            //        CustomerId = order.CustomerId,
+            //        ProductId = item.ProductId
+            //    };
 
-                var result = await _order.CreateOrder(objorder);
-                if (result == null)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
-                }
+            //    var result = await _order.CreateOrder(objorder);
+            //    if (result == null)
+            //    {
+            //        return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
+            //    }
+            //}
+
+
+            var result = await _order.CreateOrder(_mapper.Map<Order>(order));
+            if (result == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something Went Wrong");
             }
-
 
             return Ok("Added Successfully");
         }

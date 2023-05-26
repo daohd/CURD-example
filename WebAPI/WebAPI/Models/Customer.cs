@@ -19,6 +19,7 @@ namespace WebAPI.Models
 
     public class CustomerInput
     {
+        [StringLength(250)]
         public string FullName { get; set; }
         public DateTime DOB { get; set; }
         [StringLength(240)]

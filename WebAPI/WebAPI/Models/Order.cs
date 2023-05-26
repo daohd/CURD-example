@@ -25,8 +25,8 @@ namespace WebAPI.Models
     public class OrderInput
     {
         public int CustomerId { get; set; }
-        //public int ProductId { get; set; }
+        public int ProductId { get; set; }
 
-        public List<Product> lstProduct {get;set;}
+        //public List<Product> lstProduct {get;set;}
     }
 }
