@@ -4,12 +4,12 @@ import { Table } from 'antd';
 const columns = [
     {
       title: 'Product ID',
-      dataIndex: 'productid',
-      sorter: (a, b) => a.productid - b.productid,
+      dataIndex: 'ProductId',
+      sorter: (a, b) => a.ProductId - b.ProductId,
     },
     {
       title: 'ProductName',
-      dataIndex: 'productname',
+      dataIndex: 'ProductName',
       filters: [
         {
           text: 'London',
@@ -32,8 +32,8 @@ const columns = [
     },
     {
         title: 'Price',
-        dataIndex: 'price',
-        sorter: (a, b) => a.price - b.price,
+        dataIndex: 'Price',
+        sorter: (a, b) => a.Price - b.Price,
       },
   ];
   const onChange = (pagination, filters, sorter, extra) => {
@@ -50,7 +50,8 @@ export class Product extends Component {
             modalTitle: "",
             ProductId: 0,
             ProductName: "",
-            Shop: "",
+            Shop: undefined,
+            Price: 0,
             DateOfJoining: "",
             PhotoFileName: "anonymous.png",
             PhotoPath: variables.PHOTO_URL
@@ -85,6 +86,9 @@ export class Product extends Component {
     changeDateOfJoining = (e) => {
         this.setState({ DateOfJoining: e.target.value });
     }
+    changePrice = (e) => {
+        this.setState({ Price: e.target.value });
+    }
 
     addClick() {
         this.setState({
@@ -92,6 +96,8 @@ export class Product extends Component {
             ProductId: 0,
             ProductName: "",
             Customer: "",
+            Price:0,
+            Shop:undefined,
             DateOfJoining: "",
             PhotoFileName: "anonymous.png"
         });
@@ -119,7 +125,7 @@ export class Product extends Component {
                 ProductName: this.state.ProductName,
                 ShopID: this.state.Shop,
                 DateOfJoining: this.state.DateOfJoining,
-                PhotoFileName: this.state.PhotoFileName
+                Price: this.state.Price
             })
         })
             .then(res => res.json())
@@ -200,6 +206,7 @@ export class Product extends Component {
             ProductName,
             Shop,
             DateOfJoining,
+            Price,
             PhotoPath,
             PhotoFileName
         } = this.state;
@@ -227,45 +234,40 @@ export class Product extends Component {
                             </div>
 
                             <div className="modal-body">
-                                <div className="d-flex flex-row bd-highlight mb-3">
 
-                                    <div className="p-2 w-50 bd-highlight">
-
-                                        <div className="input-group mb-3">
-                                        <label>Product Name<span style={{ color: 'red' }}>*</span></label>
-                                            <input type="text" className="form-control"
+                            <div className="input-group mb-3">
+                                        <label>Product Name <span style={{ color: 'red' }}>*</span></label>
+                                            <input type="text" className="txtProductName" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
                                                 value={ProductName}
                                                 onChange={this.changeProductName} />
                                         </div>
 
                                         <div className="input-group mb-3">
-                                        <label>Shop<span style={{ color: 'red' }}>*</span></label>
-                                            <select className="form-select"
+                                        <label>Shop <span style={{ color: 'red' }}>*</span></label>
+                                            <select className="txtShop" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
                                                 onChange={this.changeShop}
-                                                value={Shops}>
+                                                placeholder="chọn shop"
+                                                value={Shop}>
                                                 {Shops.map(dep =>
-                                                    <option key={dep.ShopID}>
+                                                    <option key={dep.ShopId} value={dep.ShopId}>
                                                         {dep.ShopName}
                                                     </option>)}
                                             </select>
                                         </div>
 
                                         <div className="input-group mb-3">
-                                        <label>Date of Joining<span style={{ color: 'red' }}>*</span></label>
-                                            <input type="date" className="form-control"
+                                        <label>Date of Joining <span style={{ color: 'red' }}>*</span></label>
+                                            <input type="date" className="txtDOJ"style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
                                                 value={DateOfJoining}
                                                 onChange={this.changeDateOfJoining} />
                                         </div>
-
-
-                                    </div>
-                                    {/* <div className="p-2 w-50 bd-highlight">
-                                        <img width="250px" height="250px"
-                                            src={PhotoPath + PhotoFileName} />
-                                        <input className="m-2" type="file" 
-                                        onChange={this.imageUpload} />
-                                    </div> */}
-                                </div>
+                                        <div className="input-group mb-3">
+                                        <label>Price<span style={{ color: 'red' }}>*</span></label>
+                                            <input type="number" className="txtPrice" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                                value={Price}
+                                                onChange={this.changePrice} />
+                                        </div>
+                                
 
                                 {ProductId === 0 ?
                                     <button type="button"

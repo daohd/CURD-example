@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { variables } from './Variables.js';
 import { Table,Select } from 'antd';
+import { Product } from './Product.js';
 const { Option } = Select;
 const columns = [
     {
@@ -8,15 +9,15 @@ const columns = [
       dataIndex: 'orderid',
     },
     {
-      title: 'Customer ID',
-      dataIndex: 'customerid',
-      sorter: (a, b) => a.customerid - b.customerid,
+      title: 'Customer',
+      dataIndex: 'CustomerName',
+      sorter: (a, b) => a.Customer - b.CustomerId,
      
     },
     {
       title: 'ProductID',
-      dataIndex: 'productid',
-      sorter: (a, b) => a.productid - b.productid,
+      dataIndex: 'ProductId',
+      sorter: (a, b) => a.ProductId - b.ProductId,
     },
    
   ];
@@ -34,8 +35,9 @@ export class Home extends Component {
             Orders:[],
             modalTitle: "",
             OrderID: 0,
-            Customer: "",
-            Product: "",
+            Customer: 0,
+            Product: 0,
+            lstProduct:[],
            
         }
     }
@@ -46,11 +48,16 @@ export class Home extends Component {
         .then(data => {
             this.setState({ Products: data });
         });
+        fetch(variables.API_URL + 'Order/GetOrders')
+        .then(response => response.json())
+        .then(data => {
+            this.setState({ Orders: data });
+        });
         
             fetch(variables.API_URL + 'Customer/GetCustomer')
             .then(response => response.json())
             .then(data => {
-                this.setState({ Shops: data });
+                this.setState({ Customers: data });
             });
     }
 
@@ -61,12 +68,10 @@ export class Home extends Component {
     changeProduct = (e) => {
         this.setState({ Product: e.target.value });
     }
-    changeShop = (e) => {
-        this.setState({ Shop: e.target.value });
+    changeCustomer = (e) => {
+        this.setState({ Customer: e.target.value });
     }
-    changeDateOfJoining = (e) => {
-        this.setState({ DateOfJoining: e.target.value });
-    }
+    
 
     addClick() {
         this.setState({
@@ -74,22 +79,32 @@ export class Home extends Component {
             OrderId: 0,
             Customer: undefined,
             Product: undefined,
-          
+          lstProduct:[],
           
         });
     }
    
 
     createClick() {
-        fetch(variables.API_URL + 'Product/addProduct', {
+      var lstTemp =  [];
+      lstTemp.push({
+            ProductId: Product,
+          });
+        // lstProduct= lstProduct.push(ProductId:Product)
+        // lstProduct = lstProduct.push({
+        //     ...o,
+        //     ProductId: Product,
+        //   }));
+        // }
+        fetch(variables.API_URL + 'Order/createOrder', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                CustomerId: this.state.ProductName,
-                ProductId: this.state.Shop,
+                CustomerId: this.state.Customer,
+                ProductId: this.state.Product,
                
             })
         })
@@ -118,6 +133,7 @@ export class Home extends Component {
             OrderID,
             Product,
             Customer,
+            lstProduct,
             
         } = this.state;
 
@@ -131,7 +147,7 @@ export class Home extends Component {
                     onClick={() => this.addClick()}>
                     Add Order
                 </button>
-                <Table columns={columns} dataSource={Products} onChange={onChange} />
+                <Table columns={columns} dataSource={Orders} onChange={onChange} />
                
 
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-hidden="true">
@@ -146,24 +162,29 @@ export class Home extends Component {
                             <div className="modal-body">
                             <div className="input-group mb-3">
                             <label>Customer <span style={{ color: 'red' }}>*</span></label>
-                                            <Select style={{ width: '300px' ,marginLeft:'20px'}}
-                                        placeholder="Chọn khách hàng"
-                                      
-                                        allowClear
-                                        onChange={this.changeShop}
-                                        value={Customer}
-
-                                    >
-                                        {Customers.map(value => (
-                                            <Option key={value.CustomerID} value={value.CustomerID}
-                                            >{value.CustomerName}</Option>
-                                        ))}
-                                    </Select>
-                                          
+                            <select className="txtCustomer" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                                onChange={this.changeCustomer}
+                                                placeholder="chọn sản phẩm"
+                                                value={Customer}>
+                                                {Customers.map(dep =>
+                                                    <option key={dep.CustomerId} value={dep.CustomerId}>
+                                                        {dep.FullName}
+                                                    </option>)}
+                                            </select>
+                                            
                                         </div>
                                         <div className="input-group mb-5">
                                         <label>Product<span style={{ color: 'red' }}>*</span></label>
-                                            <Select
+                                        <select className="txtShop" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                                onChange={this.changeProduct}
+                                                placeholder="chọn sản phẩm"
+                                                value={Product}>
+                                                {Products.map(dep =>
+                                                    <option key={dep.ProductId} value={dep.ProductId}>
+                                                        {dep.ProductName}
+                                                    </option>)}
+                                            </select>
+                                            {/* <Select
                                             style={{ width: '300px' ,marginLeft:'20px'}}
                                             mode='multiple'
                                            
@@ -174,11 +195,11 @@ export class Home extends Component {
                                             value={Product} 
                                             >
 
-                                            {Products.map(company => (
-                                                <Option key={company.ProductID} filter={company.ProductName} value={company.ProductName}>{company.ProductID} - {company.ProductName}</Option>
+                                            {Products.map(pro => (
+                                                <Option key={pro.ProductId} filter={pro.ProductName} value={pro.ProductName}>{pro.ProductId} - {pro.ProductName}</Option>
                                             ))}
 
-                                        </Select>
+                                        </Select> */}
                                         </div>
                                 <button type="button"
                                         className="btn btn-primary "

@@ -4,12 +4,12 @@ import { Table } from 'antd';
 const columns = [
     {
       title: 'Customer ID',
-      dataIndex: 'customerid',
-      sorter: (a, b) => a.customerid - b.customerid,
+      dataIndex: 'CustomerId',
+      sorter: (a, b) => a.CustomerId - b.CustomerId,
     },
     {
       title: 'CustomerName',
-      dataIndex: 'customername',
+      dataIndex: 'FullName',
       filters: [
         {
           text: 'London',
@@ -20,9 +20,9 @@ const columns = [
           value: 'New York',
         },
       ],
-      filterMode: 'tree',
-      filterSearch: true,
-      onFilter: (value, record) => record.name.includes(value),
+      onFilter: (value, record) => record.FullName.indexOf(value) === 0,
+    sorter: (a, b) => a.FullName.length - b.FullName.length,
+    sortDirections: ['descend'],
       width: '60%',
     },
    
@@ -41,7 +41,8 @@ export class Customer extends Component {
             modalTitle: "",
             CustomerName: "",
             CustomerId: 0,
-
+            Email: "",
+            DOB:"",
             CustomerIdFilter: "",
             CustomerNameFilter: "",
             CustomersWithoutFilter: []
@@ -100,6 +101,12 @@ export class Customer extends Component {
 
     changeCustomerName = (e) => {
         this.setState({ CustomerName: e.target.value });
+    }
+    changeEmail = (e) => {
+        this.setState({ Email: e.target.value });
+    }
+    changeDOB = (e) => {
+        this.setState({ DOB: e.target.value });
     }
 
     addClick() {
@@ -182,7 +189,9 @@ export class Customer extends Component {
             Customers,
             modalTitle,
             CustomerId,
-            CustomerName
+            CustomerName,
+            Email,
+            DOB,
         } = this.state;
 
         return (
@@ -208,12 +217,23 @@ export class Customer extends Component {
 
                             <div className="modal-body">
                                 <div className="input-group col-3" style={{ marginLeft: '50px' }}>
-                                <label>Customer Name<span style={{ color: 'red' }}>*</span></label>
-                                    <input type="text" className="txtCustomerName" style={{width:'400px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
-                                        value={CustomerName} required
+                                <label>Customer Name</label>
+                                    <input type="text" className="txtCustomer" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                        value={CustomerName} 
                                         onChange={this.changeCustomerName} />
                                 </div>
-
+                                <div className="input-group col-3" style={{ marginLeft: '50px',marginTop:'10px' }}>
+                                <label>Email</label>
+                                    <input type="text" className="txtEmail" style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                        value={Email} 
+                                        onChange={this.changeEmail} />
+                                </div>
+                                <div className="input-group col-3" style={{ marginLeft: '50px',marginTop:'10px' }}>
+                                <label>Date of Birth<span style={{ color: 'red' }}>*</span></label>
+                                            <input type="date" className="txtDOB"style={{width:'300px', marginLeft:'10px', border: '1px solid gray',borderRadius:'10px',height:'30px'}}
+                                                value={DOB}
+                                                onChange={this.changeDOB} />
+                                        </div>
                                 {CustomerId === 0 ?
                                     <button type="button"
                                         className="btn btn-primary"
@@ -224,7 +244,7 @@ export class Customer extends Component {
 
                                 {CustomerId !== 0 ?
                                     <button type="button"
-                                        className="btn btn-primary"
+                                        className="btn btn-primary" data-bs-dismiss="modal"
                                         onClick={() => this.updateClick()}
                                         style={{float:'right', marginTop:'10px',borderRadius:'10px'}}
                                     >Update</button>
